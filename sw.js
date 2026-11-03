@@ -29,7 +29,8 @@ self.addEventListener('fetch', e => {
   if(req.method !== 'GET') return;
   const url = new URL(req.url);
   if(url.origin !== location.origin) return;      // درخواست‌های بیرونی (سرور نقشه/همگام‌سازی) دست‌نخورده
-  if(req.mode === 'navigate'){
+  const isShell = req.mode === 'navigate' && (url.pathname.endsWith('/') || url.pathname.endsWith('/index.html'));
+  if(isShell){   // فقط صفحهٔ اصلی کش می‌شود؛ demo.html جای آن را نمی‌گیرد
     e.respondWith((async () => {
       try{
         const fresh = await fetch(req, { cache:'no-store' });
