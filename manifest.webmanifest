@@ -1,0 +1,33 @@
+{
+  "name": "سامانهٔ ارسال نمونه‌های آزمایشی بذر",
+  "short_name": "ارسال نمونه",
+  "description": "ثبت بسته‌های ارسال نمونه بذر، لیبل چاپی A4/A5، کشاورزان و گزارش PDF و Word",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f3f8f5",
+  "theme_color": "#0e6e46",
+  "lang": "fa",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
