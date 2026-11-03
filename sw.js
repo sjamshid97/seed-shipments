@@ -29,17 +29,20 @@ self.addEventListener('fetch', e => {
   if(req.method !== 'GET') return;
   const url = new URL(req.url);
   if(url.origin !== location.origin) return;      // درخواست‌های بیرونی (سرور نقشه/همگام‌سازی) دست‌نخورده
-  const isShell = req.mode === 'navigate' && (url.pathname.endsWith('/') || url.pathname.endsWith('/index.html'));
-  if(isShell){   // فقط صفحهٔ اصلی کش می‌شود؛ demo.html جای آن را نمی‌گیرد
+  // هر صفحهٔ برنامه (index.html یا demo.html): اول شبکه — همیشه تازه؛ بعد کش
+  if(req.mode === 'navigate'){
     e.respondWith((async () => {
       try{
-        const fresh = await fetch(req, { cache:'no-store' });
+        const fresh = await fetch(new Request(req.url, { cache:'no-store', credentials:'same-origin' }));
         const c = await caches.open(CACHE);
-        c.put('./index.html', fresh.clone());
+        const p = new URL(req.url).pathname;
+        if(p.endsWith('/') || p.endsWith('/index.html')) c.put('./index.html', fresh.clone()).catch(()=>{});
+        else c.put(req, fresh.clone()).catch(()=>{});
         return fresh;
       }catch(err){
         const c = await caches.open(CACHE);
-        return (await c.match('./index.html')) || (await c.match('./')) || Response.error();
+        const hit = await c.match(req);
+        return hit || (await c.match('./index.html')) || (await c.match('./')) || Response.error();
       }
     })());
     return;
