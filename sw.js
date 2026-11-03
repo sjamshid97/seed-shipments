@@ -1,6 +1,6 @@
 /* Service Worker — سامانهٔ ارسال نمونه‌های آزمایشی (نسخه 1.1.0)
    هدف: باز شدن برنامه بدون اینترنت + دریافت نسخهٔ تازه با یک رفرش */
-const CACHE = 'seedsend-v1.5.1';
+const CACHE = 'seedsend-v1.5.2';
 const SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './icon-512.png'];
 
 self.addEventListener('install', e => {
